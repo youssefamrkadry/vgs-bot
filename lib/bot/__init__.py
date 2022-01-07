@@ -40,7 +40,6 @@ class Bot(BotBase):
         super().__init__(command_prefix=PREFIX)
 
     def setup(self):
-        print("here")
         for cog in COGS:
             self.load_extension(f"lib.cogs.{cog}")
             print(f"{cog} cog loaded".lower())
