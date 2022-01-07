@@ -1,0 +1,5 @@
+
+lib/bot/.env
+lib/bot/__pycache__/__init__.cpython-39.pyc
+*.pyc
+lib/bot/.env
