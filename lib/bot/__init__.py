@@ -87,11 +87,11 @@ class Bot(BotBase):
         await self.process_commands(message)
 
     @staticmethod
-    async def on_connect(self):
+    async def on_connect():
         print("bot connected")
 
     @staticmethod
-    async def on_disconnect(self):
+    async def on_disconnect():
         print("bot disconnected")
 
 
