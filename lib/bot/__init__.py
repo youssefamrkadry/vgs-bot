@@ -1,7 +1,9 @@
-import discord
+from discord import Intents
 import os
 from dotenv import load_dotenv
 from discord.ext.commands import Bot as BotBase
+from discord.ext.commands import CommandNotFound
+from discord import Embed, Message, Game
 # from replit import db
 from glob import glob
 from asyncio import sleep
@@ -33,18 +35,18 @@ class Bot(BotBase):
         self.guild = None
         self.stdout = None
         self.TOKEN = os.getenv('TOKEN')
-        print(self.TOKEN)
         self.icon = "https://i.ibb.co/QrkLL3P/VGS-Logo.png"
         self.author_icon = "https://i.ibb.co/wsS4Y4j/IMG-20211119-WA0206-2.jpg"
 
-        super().__init__(command_prefix=PREFIX)
+        super().__init__(command_prefix=PREFIX,
+                         intents=Intents.all())
 
     def setup(self):
         for cog in COGS:
             self.load_extension(f"lib.cogs.{cog}")
             print(f"{cog} cog loaded".lower())
 
-        print("setup complete")
+        print("setup complete\n")
 
     def run(self, version):
 
@@ -56,15 +58,29 @@ class Bot(BotBase):
         print("running bot...")
         super().run(self.TOKEN, reconnect=True)
 
+    # async def on_error(self, err, *args, **kwargs):
+    #     if err == "on_command_error":
+    #         await args[0].send("Something went wrong.")
+    #
+    #     raise
+    #
+    # async def on_command_error(self, ctx, exc):
+    #     if isinstance(exc, CommandNotFound):
+    #         await ctx.send(f"Wrong command, use {self.PREFIX}help for more information")
+    #     elif hasattr(exc, "original"):
+    #         raise exc.original
+    #     else:
+    #         raise exc
+
     async def on_ready(self):
         if not self.ready:
             self.guild = self.get_guild(871487383500128317)
             self.stdout = self.get_channel(871487383957286955)
 
-            print(f'VGS bot up and ready!\nWe are logged in as {bot.user}')
-            await self.change_presence(activity=discord.Game(name="Unity Game Engine"))
+            print(f'\nVGS bot up and ready!\nWe are logged in as {bot.user}\n')
+            await self.change_presence(activity=Game(name="Unity Game Engine"))
 
-            ready_embed = discord.Embed(color=0xFF0000)\
+            ready_embed = Embed(color=0xFF0000)\
                 .set_thumbnail(url=self.icon)
             ready_embed.add_field(name="Bot Online!",
                                   value="\nVGS Bot is now back online,"
@@ -77,12 +93,12 @@ class Bot(BotBase):
                 await sleep(0.5)
 
             self.ready = True
-            print("bot ready")
+            print("\nbot ready\n")
 
         else:
             print("bot reconnected")
 
-    async def on_message(self, message: discord.Message):
+    async def on_message(self, message: Message):
         await self.process_commands(message)
 
     @staticmethod

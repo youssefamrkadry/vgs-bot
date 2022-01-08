@@ -12,7 +12,7 @@ class Help(Cog):
     @Cog.listener()
     async def on_ready(self):
         if not self.bot.ready:
-            self.bot.cogs_ready.ready_up("help")
+            self.bot.cogs_ready.ready_up("Help")
 
     @command(name="hello")
     async def say_hello(self, ctx: Context):

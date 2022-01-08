@@ -57,6 +57,7 @@ def column(command, *values):
 
 def execute(command, *values):
     cur.execute(command, tuple(values))
+    commit()
 
 
 def multiexec(command, value_set):

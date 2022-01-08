@@ -1,3 +1,4 @@
 
 lib/bot/.env
 *.pyc
+lib/spreadsheets/credentials.json

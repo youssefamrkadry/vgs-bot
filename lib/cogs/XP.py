@@ -11,7 +11,7 @@ class XP(Cog):
     @Cog.listener()
     async def on_ready(self):
         if not self.bot.ready:
-            self.bot.cogs_ready.ready_up("xp")
+            self.bot.cogs_ready.ready_up("XP")
 
 
 def setup(bot):
