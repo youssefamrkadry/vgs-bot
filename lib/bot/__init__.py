@@ -1,3 +1,4 @@
+import discord
 from discord import Intents
 import os
 from dotenv import load_dotenv
@@ -89,7 +90,10 @@ class Bot(BotBase):
                                         f"\nfeel free to use {self.PREFIX}help for more info.\n\n" 
                                         f"version {self.VERSION}")
 
-            await self.stdout.send(embed=ready_embed)
+            for guild in bot.guilds:
+                general_channel = discord.utils.get(guild.channels, name="general")
+                if general_channel is not None:
+                    await general_channel.send(embed=ready_embed)
 
             while not self.cogs_ready.all_ready():
                 await sleep(0.5)
