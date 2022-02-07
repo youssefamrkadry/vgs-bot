@@ -1,5 +1,6 @@
 from discord.ext.commands import Cog
 from discord.ext.commands import command
+from discord.ext.commands import has_permissions
 from discord.ext.commands import Context
 from discord import Embed
 from ..spreadsheets import members_spreadsheet
@@ -28,6 +29,7 @@ class Register(Cog):
             await ctx.send(f"Hi {ctx.author.mention}!\nThere is no record of this ID, list IDs to find your correct ID!")
 
     @command(name="register_member")
+    @has_permissions(administrator=True)
     async def register_member_admin(self, ctx: Context, member_id):
 
         member_user = ctx.message.mentions[0]
@@ -50,6 +52,7 @@ class Register(Cog):
             await ctx.send(f"Hi {ctx.author.mention}!\nYou are not registered in the first place!")
 
     @command(name="unregister_member")
+    @has_permissions(administrator=True)
     async def unregister_member_admin(self, ctx: Context):
 
         member_user = ctx.message.mentions[0]

@@ -11,6 +11,7 @@ from asyncio import sleep
 PREFIX = "-"
 # COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")]
 COGS = [path.split("/")[-1][:-3] for path in glob("./lib/cogs/*.py")]
+print(COGS)
 
 load_dotenv()
 

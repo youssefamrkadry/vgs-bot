@@ -18,7 +18,7 @@ class XP(Cog):
 
         member = members_spreadsheet.find_member_discord(ctx.author.id)
         if member is None:
-            await ctx.send(f"Hi {ctx.author.mention}!\nYou are not registered yet, register yourself first!")
+            await ctx.send(f"Hi {ctx.author.mention}!\nYou are not registered yet, register yourself first.")
         else:
             await ctx.author.send(members_spreadsheet.calc_xp_report(member['id']))
             await ctx.send(f"Hi {ctx.author.mention}!\nYour XP details are on private.")

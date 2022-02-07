@@ -24,15 +24,20 @@ class Help(Cog):
             .set_footer(text='Created by Youssef Kadry', icon_url=self.bot.author_icon) \
             .set_thumbnail(url=self.bot.icon)
 
-        help_embed.add_field(name="Director Commands",
-                             value="\n-debate_mode [mode] \n=> Changes debate mode to [formal debate] [informal debate] [moderated caucus] [unmoderated caucus] \n\n"
-                                   + "-give_floor [@delegation] \n=> Gives the floor to the mentioned delegate \n\n"
-                                   + "-take_floor \n=> Gives the floor to the chair and mutes all delegates \n\n"
-                                   + "-warn [@delegate] \n=> Gives a warning to the mentioned delegate \n\n"
-                                   + "-vote [procedural/substantive] \n=> Starts a voting session\n\n"
-                                   + "-vote [end] \n=> Ends a voting session\n\n"
-                                   + "-make_observer [@delegation][@][@] \n=>Turns the mentioned delegations into observers \n\n"
-                                   + "-make_permanent [@delegation][@][@] \n=>Turns the mentioned delegations into permanent members (veto) \n\n"
+        if ctx.author.guild_permissions.administrator:
+            help_embed.add_field(name="Admin Commands",
+                                value="\n-register_member [member VGS ID] [@member] \n=> Forcibely registers the member in the system \n\n"
+                                    + "-unregister_member [@member] \n=> Forcibely unregisters the member from the system \n\n"
+                                    + "\n\n"
+                                    + "\n\n",
+                                inline=False)
+
+
+        help_embed.add_field(name="Member Commands",
+                             value="\n-register_self [member VGS ID] \n=> Registers you in the system \n\n"
+                                   + "-unregister_self [@member] \n=> Unregisters you from the system \n\n"
+                                   + "-list_ids [committee] \n=> Lists all IDs in the committie [CL] [MRKT] [FR] [HR] [MD] [GAD] [GDD] \n\n"
+                                   + "-my_xp \n=> Provides your xp report \n\n"
                                    + "\n\n"
                                    + "\n\n",
                              inline=False)
