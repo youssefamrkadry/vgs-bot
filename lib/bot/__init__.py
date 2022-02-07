@@ -12,7 +12,6 @@ PREFIX = "-"
 COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")]
 load_dotenv()
 
-
 class Ready(object):
     def __init__(self):
         for cog in COGS:
