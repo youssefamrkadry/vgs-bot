@@ -9,7 +9,8 @@ from glob import glob
 from asyncio import sleep
 
 PREFIX = "-"
-COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")]
+# COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")]
+COGS = [path.split("/")[-1][:-3] for path in glob("./lib/cogs/*.py")]
 load_dotenv()
 
 class Ready(object):
