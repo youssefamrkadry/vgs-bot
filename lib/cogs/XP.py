@@ -40,6 +40,7 @@ class XP(Cog):
             await ctx.send(f"Hi {ctx.author.mention}!\nCommittee report is on private.")
     
     @get_committee_report.error
+    @my_xp.error
     async def error(self, ctx: Context, error: commands.CommandError):
         if isinstance(error, commands.MissingPermissions):
             message = f"Hey, you don't have permission to do this!"
