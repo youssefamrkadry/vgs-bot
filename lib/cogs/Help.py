@@ -24,20 +24,21 @@ class Help(Cog):
             .set_footer(text='Created by Youssef Kadry', icon_url=self.bot.author_icon) \
             .set_thumbnail(url=self.bot.icon)
 
+        # Administrator commands help, reserved for heads and mentors
         if ctx.author.guild_permissions.administrator:
             help_embed.add_field(name="Admin Commands",
-                                value="\n-register_member [member VGS ID] [@member] \n=> Forcibely registers the member in the system \n\n"
-                                    + "-unregister_member [@member] \n=> Forcibely unregisters the member from the system \n\n"
+                                value="\n-register_member [member VGS ID] [@member] \n=> Forcibely registers the member in the system \nexample: -register_member 983 @Ahmed \n\n"
+                                    + "-unregister_member [@member] \n=> Forcibely unregisters the member from the system \nexample: -unregister_member @Ahmed \n\n"
                                     + "\n\n"
                                     + "\n\n",
                                 inline=False)
 
-
+        # Member and Apprentices commands, accessible by anyone
         help_embed.add_field(name="Member Commands",
-                             value="\n-register_self [member VGS ID] \n=> Registers you in the system \n\n"
-                                   + "-unregister_self [@member] \n=> Unregisters you from the system \n\n"
-                                   + "-list_ids [committee] \n=> Lists all IDs in the committie [CL] [MRKT] [FR] [HR] [MD] [GAD] [GDD] \n\n"
-                                   + "-my_xp \n=> Provides your xp report \n\n"
+                             value="\n-register_self [member VGS ID] \n=> Registers you in the system \nexample: -register_self 983 \n\n"
+                                   + "-unregister_self \n=> Unregisters you from the system \nexample: -unregister_self \n\n"
+                                   + "-list_ids [committee] \n=> Lists all IDs in the committie [CL] [MRKT] [FR] [HR] [MD] [GAD] [GDD] \nexample: -list_ids CL \n\n"
+                                   + "-my_xp \n=> Provides your xp report \nexample: -my_xp \n\n"
                                    + "\n\n"
                                    + "\n\n",
                              inline=False)

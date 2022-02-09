@@ -1,3 +1,4 @@
+from webbrowser import get
 import gspread
 
 # import datetime
@@ -83,27 +84,46 @@ def unregister(discord_id):
 
 
 def calc_xp_report(member_id):
+    return calc_xp_report(member_id,
+    sh_attendance.worksheet("Form Responses 1").get_all_values(),
+    sh_xp.worksheet("Form Responses 1").get_all_values()
+    )
+
+
+def calc_xp_report(member_id, attendance_ws, xp_ws):
     attendance_xp = 0
     misc_xp = 0
     report = ""
 
-    worksheet = sh_attendance.worksheet("Form Responses 1")
-    worksheet_values = worksheet.get_all_values()
-    for row in worksheet_values:
+    worksheet = attendance_ws
+    for row in worksheet:
         for cell in row:
             if f"[{member_id}]" in cell:
                 attendance_xp += 1
     report += f"Attendance: {attendance_xp}\n"
 
-    worksheet = sh_xp.worksheet("Form Responses 1")
-    instances = worksheet.findall(f"{member_id}")
-    for cell in instances:
-        xp_inc = int(worksheet.cell(cell.row, cell.col + 1).value)
-        justification = worksheet.cell(cell.row, cell.col + 2).value
-        misc_xp += xp_inc
-        report += f"{justification}: {xp_inc}\n"
+    worksheet = xp_ws
+    for response in worksheet:
+        if response[4] == member_id: # member ID
+            misc_xp += int(response[5]) # increase in xp
+            justification = response[6] # justification
+            report += f"{justification}: {response[5]}\n"
 
     total_xp = attendance_xp + misc_xp
-    report += f"\nTotal XP is {total_xp}"
+    report += f"Total XP is {total_xp}\n\n"
 
     return report
+
+
+def get_committee_report(committee):
+    report = f"=========== {committee} COMMITTEE REPORT ===========\n\n"
+    try:
+        committee_ws = sh_members.worksheet(committee).get_all_values()
+        attendance_ws = sh_attendance.worksheet("Form Responses 1").get_all_values()
+        xp_ws = sh_xp.worksheet("Form Responses 1").get_all_values()
+        for member in committee_ws:
+            report += member[0] + "\t" + member[1] + "\n" # [ID, Name]
+            report += calc_xp_report(member[0], attendance_ws, xp_ws)
+        return report
+    except gspread.exceptions.WorksheetNotFound:
+        return None
