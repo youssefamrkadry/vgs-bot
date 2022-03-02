@@ -84,13 +84,13 @@ def unregister(discord_id):
 
 
 def calc_xp_report(member_id):
-    return calc_xp_report(member_id,
+    return calc_xp_report_helper(member_id,
     sh_attendance.worksheet("Form Responses 1").get_all_values(),
     sh_xp.worksheet("Form Responses 1").get_all_values()
     )
 
 
-def calc_xp_report(member_id, attendance_ws, xp_ws):
+def calc_xp_report_helper(member_id, attendance_ws, xp_ws):
     attendance_xp = 0
     misc_xp = 0
     report = ""
@@ -123,7 +123,7 @@ def get_committee_report(committee):
         xp_ws = sh_xp.worksheet("Form Responses 1").get_all_values()
         for member in committee_ws:
             report += member[0] + "\t" + member[1] + "\n" # [ID, Name]
-            report += calc_xp_report(member[0], attendance_ws, xp_ws)
+            report += calc_xp_report_helper(member[0], attendance_ws, xp_ws)
         return report
     except gspread.exceptions.WorksheetNotFound:
         return None
