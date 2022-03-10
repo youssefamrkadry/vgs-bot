@@ -1,5 +1,6 @@
 from webbrowser import get
 import gspread
+import re
 
 # import datetime
 # from gspread_formatting import *
@@ -8,7 +9,7 @@ gc = gspread.service_account(filename='lib/spreadsheets/credentials.json')
 # gc = gspread.service_account(filename='credentials.json')
 sh_members = gc.open("MEMBERS 2022")
 sh_attendance = gc.open("VGS Attendance Form (Responses)")
-sh_xp = gc.open("VGS XP Form (Responses)")
+sh_xp = gc.open("VGS XP Form (NEW) (Responses)")
 
 
 def find_member(member_id):
@@ -85,33 +86,26 @@ def unregister(discord_id):
 
 def calc_xp_report(member_id):
     return calc_xp_report_helper(member_id,
-    sh_attendance.worksheet("Form Responses 1").get_all_values(),
     sh_xp.worksheet("Form Responses 1").get_all_values()
     )
 
 
-def calc_xp_report_helper(member_id, attendance_ws, xp_ws):
-    attendance_xp = 0
-    misc_xp = 0
+def calc_xp_report_helper(member_id, xp_ws):
+    xp = 0
+    total_xp = 0
     report = ""
-
-    worksheet = attendance_ws
-    for row in worksheet:
-        for cell in row:
-            if f"[{member_id}]" in cell:
-                attendance_xp += 1
-    report += f"Attendance: {attendance_xp}\n"
 
     worksheet = xp_ws
     for response in worksheet:
-        if response[4] == member_id: # member ID
-            misc_xp += int(response[5]) # increase in xp
+        response = [s for s in response if s]
+        if str(member_id) in response[4]:
+            reason = response[5] # increase in xp
+            xp = int(reason[reason.find("[")+1:reason.find("XP]")])
+            total_xp += xp
             justification = response[6] # justification
-            report += f"{justification}: {response[5]}\n"
+            report += f"{justification}: {xp}XP\n"
 
-    total_xp = attendance_xp + misc_xp
     report += f"Total XP is {total_xp}\n\n"
-
     return report
 
 
@@ -119,11 +113,10 @@ def get_committee_report(committee):
     report = f"=========== {committee} COMMITTEE REPORT ===========\n\n"
     try:
         committee_ws = sh_members.worksheet(committee).get_all_values()
-        attendance_ws = sh_attendance.worksheet("Form Responses 1").get_all_values()
         xp_ws = sh_xp.worksheet("Form Responses 1").get_all_values()
         for member in committee_ws:
             report += member[0] + "\t" + member[1] + "\n" # [ID, Name]
-            report += calc_xp_report_helper(member[0], attendance_ws, xp_ws)
+            report += calc_xp_report_helper(member[0], xp_ws)
         return report
     except gspread.exceptions.WorksheetNotFound:
         return None
