@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from discord.ext.commands import Cog
 from discord.ext.commands import command
@@ -36,6 +37,11 @@ class XP(Cog):
         if report is None:
             await ctx.send(f"Hi {ctx.author.mention}!\n{committee} is not a valid committee")
         else:
+            with open("result.txt", "w") as file:
+                file.write(report)
+            # send file to Discord in message
+            with open("result.txt", "rb") as file:
+                await ctx.send("Your file is:", file=discord.File(file, "report.txt"))
             await ctx.author.send(report)
             await ctx.send(f"Hi {ctx.author.mention}!\nCommittee report is on private.")
     
