@@ -41,9 +41,8 @@ class XP(Cog):
                 file.write(report)
             # send file to Discord in message
             with open("result.txt", "rb") as file:
-                await ctx.send("Your file is:", file=discord.File(file, "report.txt"))
-            await ctx.author.send(report)
-            await ctx.send(f"Hi {ctx.author.mention}!\nCommittee report is on private.")
+                await ctx.author.send("Your Report:", file=discord.File(file, "report.txt"))
+                await ctx.send(f"Hi {ctx.author.mention}!\nCommittee report is on private.")
     
     @get_committee_report.error
     @my_xp.error

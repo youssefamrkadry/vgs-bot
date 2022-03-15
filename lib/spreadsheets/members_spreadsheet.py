@@ -108,7 +108,7 @@ def calc_xp_report_helper(member_id, xp_ws):
             justification = response[6] # justification
             report += f"{justification}: {xp}XP\n"
 
-    report += f"\nAttended {attendance} sessions/meetings\n"
+    report += f"--------\nAttended {attendance} sessions/meetings\n"
     report += f"Total XP is {total_xp}\n\n\n"
     return report
 
