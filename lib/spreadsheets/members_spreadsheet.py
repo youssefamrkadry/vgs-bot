@@ -93,6 +93,7 @@ def calc_xp_report(member_id):
 def calc_xp_report_helper(member_id, xp_ws):
     xp = 0
     total_xp = 0
+    attendance = 0
     report = ""
 
     worksheet = xp_ws
@@ -100,12 +101,15 @@ def calc_xp_report_helper(member_id, xp_ws):
         response = [s for s in response if s]
         if str(member_id) in response[4]:
             reason = response[5] # increase in xp
+            if "Attendance" in reason:
+                attendance += 1
             xp = int(reason[reason.find("[")+1:reason.find("XP]")])
             total_xp += xp
             justification = response[6] # justification
             report += f"{justification}: {xp}XP\n"
 
-    report += f"Total XP is {total_xp}\n\n"
+    report += f"\nAttended {attendance} sessions/meetings\n"
+    report += f"Total XP is {total_xp}\n\n\n"
     return report
 
 
