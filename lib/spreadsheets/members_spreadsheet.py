@@ -125,5 +125,3 @@ def get_committee_report(committee):
         return report
     except gspread.exceptions.WorksheetNotFound:
         return None
-
-print(list_ids("HR"))
