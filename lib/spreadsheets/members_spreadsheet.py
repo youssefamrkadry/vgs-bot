@@ -34,8 +34,10 @@ def list_ids(committee_name):
     members_parsed = ""
     try:
         members = sh_members.worksheet(committee_name).get_all_values()
+        members_parsed += "```"
         for member in members:
             members_parsed = members_parsed + member[0] + "\t" + member[1] + "\n"
+        members_parsed += "```"
         return members_parsed
     except gspread.exceptions.WorksheetNotFound:
         return None
@@ -123,3 +125,5 @@ def get_committee_report(committee):
         return report
     except gspread.exceptions.WorksheetNotFound:
         return None
+
+print(list_ids("HR"))
