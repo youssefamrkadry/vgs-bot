@@ -1,12 +1,25 @@
-from webbrowser import get
 import gspread
-import re
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # import datetime
 # from gspread_formatting import *
 
-gc = gspread.service_account(filename='lib/spreadsheets/credentials.json')
-# gc = gspread.service_account(filename='credentials.json')
+credentials = {
+  "type": os.getenv("type"),
+  "project_id": os.getenv("project_id"),
+  "private_key_id": os.getenv("private_key_id"),
+  "private_key": os.getenv("private_key"),
+  "client_email": os.getenv("client_email"),
+  "client_id": os.getenv("client_id"),
+  "auth_uri": os.getenv("auth_uri"),
+  "token_uri": os.getenv("token_uri"),
+  "auth_provider_x509_cert_url": os.getenv("auth_provider_x509_cert_url"),
+  "client_x509_cert_url": os.getenv("client_x509_cert_url"),
+}
+
+gc = gspread.service_account_from_dict(credentials)
 sh_members = gc.open("MEMBERS 2022")
 sh_xp = gc.open("VGS XP Form (NEW) (Responses)")
 
@@ -31,10 +44,9 @@ def find_member_discord(discord_id):
 
 
 def list_ids(committee_name):
-    members_parsed = ""
+    members_parsed = "```"
     try:
         members = sh_members.worksheet(committee_name).get_all_values()
-        members_parsed += "```"
         for member in members:
             members_parsed = members_parsed + member[0] + "\t" + member[1] + "\n"
         members_parsed += "```"
