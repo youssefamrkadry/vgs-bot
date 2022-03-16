@@ -20,8 +20,6 @@ credentials = {
   "client_x509_cert_url": os.getenv("client_x509_cert_url"),
 }
 
-print(os.getenv("private_key"))
-
 gc = gspread.service_account_from_dict(credentials)
 sh_members = gc.open("MEMBERS 2022")
 sh_xp = gc.open("VGS XP Form (NEW) (Responses)")
