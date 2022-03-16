@@ -6,7 +6,6 @@ load_dotenv()
 # import datetime
 # from gspread_formatting import *
 
-print(os.getenv("type"))
 
 credentials = {
   "type": os.getenv("type"),
@@ -20,6 +19,8 @@ credentials = {
   "auth_provider_x509_cert_url": os.getenv("auth_provider_x509_cert_url"),
   "client_x509_cert_url": os.getenv("client_x509_cert_url"),
 }
+
+print(credentials)
 
 gc = gspread.service_account_from_dict(credentials)
 sh_members = gc.open("MEMBERS 2022")
