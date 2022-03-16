@@ -12,7 +12,6 @@ from asyncio import sleep
 PREFIX = "-"
 # COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")]
 COGS = [path.split("/")[-1][:-3] for path in glob("./lib/cogs/*.py")]
-print(COGS)
 
 load_dotenv()
 
@@ -83,17 +82,17 @@ class Bot(BotBase):
             print(f'\nVGS bot up and ready!\nWe are logged in as {bot.user}\n')
             await self.change_presence(activity=Game(name="Unity Game Engine"))
 
-            ready_embed = Embed(color=0xFF0000)\
-                .set_thumbnail(url=self.icon)
-            ready_embed.add_field(name="Bot Online!",
-                                  value="\nVGS Bot is now back online,"
-                                        f"\nfeel free to use {self.PREFIX}help for more info.\n\n" 
-                                        f"version {self.VERSION}")
+            # ready_embed = Embed(color=0xFF0000)\
+            #     .set_thumbnail(url=self.icon)
+            # ready_embed.add_field(name="Bot Online!",
+            #                       value="\nVGS Bot is now back online,"
+            #                             f"\nfeel free to use {self.PREFIX}help for more info.\n\n" 
+            #                             f"version {self.VERSION}")
 
-            for guild in bot.guilds:
-                general_channel = discord.utils.get(guild.channels, name="general")
-                if general_channel is not None:
-                    await general_channel.send(embed=ready_embed)
+            # for guild in bot.guilds:
+            #     general_channel = discord.utils.get(guild.channels, name="general")
+            #     if general_channel is not None:
+            #         await general_channel.send(embed=ready_embed)
 
             while not self.cogs_ready.all_ready():
                 await sleep(0.5)
