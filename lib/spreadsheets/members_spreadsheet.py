@@ -8,7 +8,6 @@ import re
 gc = gspread.service_account(filename='lib/spreadsheets/credentials.json')
 # gc = gspread.service_account(filename='credentials.json')
 sh_members = gc.open("MEMBERS 2022")
-sh_attendance = gc.open("VGS Attendance Form (Responses)")
 sh_xp = gc.open("VGS XP Form (NEW) (Responses)")
 
 
