@@ -6,6 +6,8 @@ load_dotenv()
 # import datetime
 # from gspread_formatting import *
 
+print(os.getenv("type"))
+
 credentials = {
   "type": os.getenv("type"),
   "project_id": os.getenv("project_id"),
